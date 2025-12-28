@@ -131,20 +131,20 @@ const LoginPage = ({ onLogin }) => {
             <label className="block text-sm font-semibold text-gray-700 mb-2">
               Telefon Numarası
             </label>
-            <div className="flex gap-2">
+            <div className="flex flex-col md:flex-row gap-2">
               <input
                 type="tel"
                 value={phone}
                 onChange={handlePhoneChange}
                 placeholder="0532 123 45 67"
                 maxLength={14}
-                className="flex-1 h-12 border-2 border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
+                className="w-full md:flex-1 h-12 mb-2 md:mb-0 border-2 border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
                 disabled={smsSent}
               />
               <button
                 onClick={handleSendSms}
                 disabled={smsSent || phone.length < 11}
-                className={`h-12 px-6 rounded-lg font-semibold transition-colors ${
+                className={`w-full md:w-auto h-12 px-6 rounded-lg font-semibold transition-colors ${
                   smsSent || phone.length < 11
                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                     : 'bg-blue-600 text-white hover:bg-blue-700'
