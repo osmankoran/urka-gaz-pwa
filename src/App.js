@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import BottomNav from './components/BottomNav';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 import CartPage from './pages/CartPage';
@@ -104,6 +105,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>

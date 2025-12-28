@@ -47,10 +47,44 @@ export const customers = [
   }
 ];
 
-// Telefon numarasına göre müşteri bulma
+// Telefon numarasına göre müşteri bulma (localStorage dahil)
 export const findCustomerByPhone = (phone) => {
   // Telefon numarasını temizle (boşluk, tire, parantez kaldır)
   const cleanPhone = phone.replace(/\s|-|\(|\)/g, '');
+  
+  // Önce localStorage'dan ara
+  const savedCustomers = localStorage.getItem('urka-gaz-customers');
+  if (savedCustomers) {
+    const allCustomers = JSON.parse(savedCustomers);
+    const found = allCustomers.find(customer => customer.phone === cleanPhone);
+    if (found) return found;
+  }
+  
+  // Sonra default müşterilerde ara
   return customers.find(customer => customer.phone === cleanPhone);
+};
+
+// Yeni müşteri ekleme (localStorage'a kaydet)
+export const addCustomer = (newCustomer) => {
+  // Mevcut müşterileri localStorage'dan al
+  const savedCustomers = localStorage.getItem('urka-gaz-customers');
+  let allCustomers = savedCustomers ? JSON.parse(savedCustomers) : [...customers];
+  
+  // Yeni müşteriyi ekle
+  allCustomers.push(newCustomer);
+  
+  // localStorage'a kaydet
+  localStorage.setItem('urka-gaz-customers', JSON.stringify(allCustomers));
+  
+  return newCustomer;
+};
+
+// Tüm müşterileri getir (localStorage + default)
+export const getAllCustomers = () => {
+  const savedCustomers = localStorage.getItem('urka-gaz-customers');
+  if (savedCustomers) {
+    return JSON.parse(savedCustomers);
+  }
+  return customers;
 };
 

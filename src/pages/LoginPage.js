@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { findCustomerByPhone } from '../data/customers';
 
 const LoginPage = ({ onLogin }) => {
@@ -95,20 +95,40 @@ const LoginPage = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4">
+    <div className="min-h-screen overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center px-4 py-6">
       <div className="w-full max-w-md">
-        {/* Logo ve Başlık */}
+        {/* Logo */}
         <div className="text-center mb-8">
-          <div className="text-6xl mb-4">⛽</div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">URKA Gaz</h1>
-          <p className="text-gray-600">Hoş Geldiniz</p>
+          <div className="w-48 mx-auto mb-4">
+            <svg viewBox="0 0 200 80" className="w-full">
+              <text
+                x="100"
+                y="35"
+                textAnchor="middle"
+                className="text-2xl font-bold fill-blue-600"
+                style={{ fontSize: '24px', fontWeight: 'bold' }}
+              >
+                URKA GAZ
+              </text>
+              <text
+                x="100"
+                y="55"
+                textAnchor="middle"
+                className="text-xs fill-gray-600"
+                style={{ fontSize: '10px' }}
+              >
+                Endüstriyel Gaz Tedariki
+              </text>
+            </svg>
+          </div>
+          <p className="text-gray-600 text-sm">Hoş Geldiniz</p>
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 space-y-6">
+        <div className="bg-white rounded-2xl shadow-xl p-6 space-y-5">
           {/* Telefon Numarası */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Telefon Numarası
             </label>
             <div className="flex gap-2">
@@ -118,13 +138,13 @@ const LoginPage = ({ onLogin }) => {
                 onChange={handlePhoneChange}
                 placeholder="0532 123 45 67"
                 maxLength={14}
-                className="flex-1 min-h-12 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+                className="flex-1 h-12 border-2 border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
                 disabled={smsSent}
               />
               <button
                 onClick={handleSendSms}
                 disabled={smsSent || phone.length < 11}
-                className={`min-h-12 px-6 rounded-lg font-semibold transition-colors ${
+                className={`h-12 px-6 rounded-lg font-semibold transition-colors ${
                   smsSent || phone.length < 11
                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                     : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -138,7 +158,7 @@ const LoginPage = ({ onLogin }) => {
           {/* SMS Kodu */}
           {smsSent && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 SMS Kodu
               </label>
               <input
@@ -147,7 +167,7 @@ const LoginPage = ({ onLogin }) => {
                 onChange={handleSmsCodeChange}
                 placeholder="1234"
                 maxLength={4}
-                className="w-full min-h-12 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center text-2xl font-bold tracking-widest"
+                className="w-full h-12 border-2 border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center text-2xl font-bold tracking-widest"
               />
               <p className="text-xs text-gray-500 mt-2">
                 SMS kodunuz telefonunuza gönderildi.
@@ -171,8 +191,8 @@ const LoginPage = ({ onLogin }) => {
 
           {/* Hata Mesajı */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-              <p className="text-sm text-red-600">{error}</p>
+            <div className="bg-red-50 border-2 border-red-300 rounded-lg p-3">
+              <p className="text-sm font-medium text-red-700">{error}</p>
             </div>
           )}
 
@@ -180,7 +200,7 @@ const LoginPage = ({ onLogin }) => {
           <button
             onClick={handleLogin}
             disabled={!smsSent || smsCode.length !== 4 || isLoading}
-            className={`w-full min-h-12 bg-blue-600 text-white rounded-lg font-bold text-lg hover:bg-blue-700 transition-colors ${
+            className={`w-full h-12 bg-blue-600 text-white rounded-lg font-bold text-lg hover:bg-blue-700 transition-colors ${
               !smsSent || smsCode.length !== 4 || isLoading
                 ? 'opacity-50 cursor-not-allowed'
                 : ''
@@ -189,8 +209,21 @@ const LoginPage = ({ onLogin }) => {
             {isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
           </button>
 
+          {/* Kayıt Ol Linki */}
+          <div className="pt-4 border-t border-gray-200 text-center">
+            <p className="text-sm text-gray-600">
+              Hesabınız yok mu?{' '}
+              <Link
+                to="/register"
+                className="text-blue-600 font-semibold hover:text-blue-700 hover:underline"
+              >
+                Kayıt Ol
+              </Link>
+            </p>
+          </div>
+
           {/* Test Bilgisi */}
-          <div className="pt-4 border-t border-gray-200">
+          <div className="pt-2 border-t border-gray-200">
             <p className="text-xs text-gray-500 text-center">
               Test için: 0532 123 45 67 - Kod: 1234
             </p>
@@ -202,4 +235,3 @@ const LoginPage = ({ onLogin }) => {
 };
 
 export default LoginPage;
-
